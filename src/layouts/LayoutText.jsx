@@ -3,15 +3,8 @@ import LogoDark from '../assets/JRI_LOGO.png';
 import LogoLight from '../assets/JRI_LOGO_Light.png';
 
 const LayoutText = ({ state, canvasRef, contentBoxRef }) => {
-  const imageStyle = {
-    backgroundImage: state.image ? `url(${state.image})` : 'none',
-    backgroundSize: `${state.zoom}%`,
-    backgroundPosition: `${state.x}% ${state.y}%`
-  };
-
   return (
     <div id="export-canvas" className={`ig-post ${state.theme} layout-text ${state.fontFamily}`} ref={canvasRef}>
-      <div className="post-image" id="render-image" style={imageStyle}></div>
       
       <div className="content-box" ref={contentBoxRef}>
         {state.subtitle.trim() !== '' && (
