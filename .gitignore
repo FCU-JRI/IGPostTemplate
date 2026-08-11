@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Teaching Materials
+MISSION.md
+assets/
+lessons/
+refactor_layouts.cjs
+
