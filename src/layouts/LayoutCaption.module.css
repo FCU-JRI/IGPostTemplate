@@ -1,12 +1,12 @@
 .layoutRoot {
     padding: 0;
     gap: 0;
+    justify-content: flex-end;
 }
 
 .layoutRoot .postImage {
-    position: relative;
-    flex: 1;
-    width: 100%;
+    position: absolute;
+    inset: 0;
     background-size: cover;
     background-position: center;
     z-index: 1;
@@ -17,7 +17,7 @@
     flex: none;
     width: 100%;
     z-index: 2;
-    background: color-mix(in srgb, var(--ig-content-bg) 70%, transparent);
+    background: color-mix(in srgb, var(--ig-content-bg) 20%, transparent);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: none;
