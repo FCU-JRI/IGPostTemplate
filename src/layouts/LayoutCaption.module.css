@@ -1,4 +1,39 @@
-.layoutRoot { padding: 0; gap: 0; }
-.postImage { position: relative; flex: 1; width: 100%; background-size: cover; background-position: center; z-index: 1; }
-.contentBox { position: relative; flex: none; width: 100%; z-index: 2; background: color-mix(in srgb, var(--ig-content-bg) 70%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: none; border-radius: 0; margin: 0; padding: 60px 80px 140px 80px; justify-content: flex-start; gap: 20px; box-shadow: 0 -10px 30px rgba(0,0,0,0.15); }
-.postFooter { position: absolute; bottom: 50px; left: 80px; right: 80px; padding: 0; z-index: 3; }
+.layoutRoot {
+    padding: 0;
+    gap: 0;
+}
+
+.layoutRoot .postImage {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.layoutRoot .contentBox {
+    position: relative;
+    flex: none;
+    width: 100%;
+    z-index: 2;
+    background: color-mix(in srgb, var(--ig-content-bg) 70%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: none;
+    border-radius: 0;
+    margin: 0;
+    padding: 60px 80px 140px 80px;
+    justify-content: flex-start;
+    gap: 20px;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.layoutRoot .postFooter {
+    position: absolute;
+    bottom: 50px;
+    left: 80px;
+    right: 80px;
+    padding: 0;
+    z-index: 3;
+}

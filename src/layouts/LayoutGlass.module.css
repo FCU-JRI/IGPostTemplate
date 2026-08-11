@@ -1,4 +1,4 @@
 .layoutRoot { padding: 0; justify-content: flex-end; }
-.postImage { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: 1; }
-.contentBox { flex: none; z-index: 2; margin: 60px; margin-bottom: 160px; background: var(--ig-glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--ig-glass-border); border-radius: 40px; padding: 60px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-.postFooter { position: absolute; bottom: 60px; left: 80px; right: 80px; padding: 0; z-index: 2; }
+.layoutRoot .postImage { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: 1; }
+.layoutRoot .contentBox { flex: none; z-index: 2; margin: 60px; margin-bottom: 160px; background: var(--ig-glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--ig-glass-border); border-radius: 40px; padding: 60px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+.layoutRoot .postFooter { position: absolute; bottom: 60px; left: 80px; right: 80px; padding: 0; z-index: 2; }

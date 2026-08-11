@@ -1,5 +1,5 @@
 .layoutRoot { padding: 60px; }
-.postImage { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-size: cover; background-position: center; background-color: var(--ig-image-bg); z-index: 1; }
+.layoutRoot .postImage { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-size: cover; background-position: center; background-color: var(--ig-image-bg); z-index: 1; }
 .postImage::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.35); }
-.contentBox { flex: 1; z-index: 2; background: var(--ig-glass-bg); backdrop-filter: blur(12px); border-color: var(--ig-glass-border); }
-.postFooter { z-index: 2; }
+.layoutRoot .contentBox { flex: 1; z-index: 2; background: var(--ig-glass-bg); backdrop-filter: blur(12px); border-color: var(--ig-glass-border); }
+.layoutRoot .postFooter { z-index: 2; }
