@@ -2,11 +2,11 @@ import React from 'react';
 import LogoDark from '../assets/JRI_LOGO.png';
 import LogoLight from '../assets/JRI_LOGO_Light.png';
 import baseStyles from './LayoutBase.module.css';
+import { cx, getSharedStyles } from '../utils/styleUtils';
 import styles from './LayoutBg.module.css';
 
 const LayoutBg = ({ state, canvasRef, contentBoxRef }) => {
-  const fontStyle = state.fontFamily === 'font-sans' ? baseStyles.fontSans : baseStyles.fontSerif;
-  const logoPosStyle = state.logoPosition === 'logo-bottom-left' ? baseStyles.logoBottomLeft : baseStyles.logoBottomRight;
+  const { fontStyle, logoPosStyle } = getSharedStyles(state, baseStyles);
 
   const imageStyle = {
     backgroundImage: state.image ? `url(${state.image})` : 'none',
@@ -15,9 +15,9 @@ const LayoutBg = ({ state, canvasRef, contentBoxRef }) => {
   };
 
   return (
-    <div id="export-canvas" className={`${baseStyles.igPost} ${state.theme} ${fontStyle} ${styles.layoutRoot || ''}`} ref={canvasRef}>
-      <div className={`${baseStyles.postImage} ${styles.postImage || ''}`} id="render-image" style={imageStyle}></div>
-      <div className={`${baseStyles.contentBox} ${styles.contentBox || ''}`} ref={contentBoxRef}>
+    <div id="export-canvas" className={cx(baseStyles.igPost, state.theme, fontStyle, styles.layoutRoot)} ref={canvasRef}>
+      <div className={cx(baseStyles.postImage, styles.postImage)} id="render-image" style={imageStyle}></div>
+      <div className={cx(baseStyles.contentBox, styles.contentBox)} ref={contentBoxRef}>
         {state.subtitle.trim() !== '' && (
           <div className={baseStyles.subtitleBadge} id="render-subtitle">{state.subtitle}</div>
         )}
@@ -25,7 +25,7 @@ const LayoutBg = ({ state, canvasRef, contentBoxRef }) => {
         <p className={baseStyles.bodyText} id="render-body">{state.body}</p>
       </div>
 
-      <div className={`${baseStyles.postFooter} ${logoPosStyle} ${styles.postFooter || ''}`} id="render-footer">
+      <div className={cx(baseStyles.postFooter, logoPosStyle, styles.postFooter)} id="render-footer">
         <img 
           src={state.theme === 'theme-light' ? LogoLight : LogoDark} 
           alt="JRI Logo" 

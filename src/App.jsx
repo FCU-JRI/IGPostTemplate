@@ -2,6 +2,7 @@ import React, { useReducer, useRef, useState, useCallback } from 'react';
 import ControlPanel from './components/ControlPanel';
 import PreviewCanvas from './components/PreviewCanvas';
 import { exportImage } from './utils/exportImage';
+import styles from './App.module.css';
 
 const initialState = {
   theme: 'theme-crimson',
@@ -26,8 +27,6 @@ function reducer(state, action) {
       return state;
   }
 }
-
-import styles from './App.module.css';
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
