@@ -26,7 +26,8 @@
     --ig-text-body: #a1a1aa;
     --ig-badge-bg: #e11d48; /* Elegant crimson red */
     --ig-badge-text: #ffffff;
-    --ig-duotone-bg: #e11d48;
+    --ig-duotone-bg: #f43f5e; /* Spotify highlight: Bright Rose */
+    --ig-duotone-shadow: #4c1d95; /* Spotify shadow: Deep Violet */
     --ig-glass-bg: rgba(31, 41, 55, 0.75);
     --ig-glass-border: rgba(255, 255, 255, 0.15);
     --ig-image-bg: #111827;
@@ -41,7 +42,8 @@
     --ig-text-body: #4b5563;
     --ig-badge-bg: #111827;
     --ig-badge-text: #ffffff;
-    --ig-duotone-bg: #f3f4f6;
+    --ig-duotone-bg: #34d399; /* Spotify highlight: Emerald Mint */
+    --ig-duotone-shadow: #1e40af; /* Spotify shadow: Deep Blue */
     --ig-glass-bg: rgba(255, 255, 255, 0.85);
     --ig-glass-border: rgba(0, 0, 0, 0.1);
     --ig-image-bg: #e5e7eb;

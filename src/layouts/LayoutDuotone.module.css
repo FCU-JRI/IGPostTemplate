@@ -1,4 +1,6 @@
 .layoutRoot { padding: 60px; background-color: var(--ig-duotone-bg); }
-.layoutRoot .postImage { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: 1; filter: grayscale(100%); mix-blend-mode: luminosity; opacity: 0.6; }
+.layoutRoot .postImage { position: absolute; inset: 0; z-index: 1; }
+.layoutRoot .postImage::before { content: ""; position: absolute; inset: 0; background-image: inherit; background-size: inherit; background-position: inherit; filter: grayscale(100%) contrast(1.2); mix-blend-mode: multiply; }
+.layoutRoot .postImage::after { content: ""; position: absolute; inset: 0; background-color: var(--ig-duotone-shadow); mix-blend-mode: screen; }
 .layoutRoot .contentBox { flex: 1; z-index: 2; background: transparent; border: none; text-shadow: var(--ig-text-shadow); }
 .layoutRoot .postFooter { z-index: 2; }
