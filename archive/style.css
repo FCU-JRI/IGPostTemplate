@@ -1,0 +1,501 @@
+/* ==========================================================================
+   Base & Application UI Reset
+   ========================================================================== */
+:root {
+    /* Control Panel Variables */
+    --primary: #4F46E5;
+    --primary-hover: #4338CA;
+    --bg-dark: #0B0F19;
+    --surface: #1F2937;
+    --border: #374151;
+    --text-main: #F9FAFB;
+    --text-muted: #9CA3AF;
+}
+
+/* ==========================================================================
+   IG Post Theme Variables
+   ========================================================================== */
+
+.ig-post.theme-crimson {
+    --ig-bg: #09090b; /* Very dark zinc */
+    --ig-content-bg: #18181b; 
+    --ig-border: #27272a;
+    --ig-text-main: #fafafa;
+    --ig-text-body: #a1a1aa;
+    --ig-badge-bg: #e11d48; /* Elegant crimson red */
+    --ig-badge-text: #ffffff;
+}
+
+.ig-post.theme-light {
+    --ig-bg: #f3f4f6;
+    --ig-content-bg: #ffffff;
+    --ig-border: #e5e7eb;
+    --ig-text-main: #111827;
+    --ig-text-body: #4b5563;
+    --ig-badge-bg: #111827;
+    --ig-badge-text: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', 'Noto Sans TC', sans-serif;
+    background-color: #111827;
+    color: var(--text-main);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* ==========================================================================
+   Left Control Panel
+   ========================================================================== */
+.control-panel {
+    width: 380px;
+    background-color: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.control-panel h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+input[type="text"],
+textarea,
+.select-input {
+    width: 100%;
+    background-color: #111827;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+    resize: vertical;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+.select-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.radio-group {
+    display: flex;
+    gap: 1.5rem;
+    background-color: #111827;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.radio-group label {
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s, transform 0.1s;
+    margin-top: 1rem;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+.help-text {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* ==========================================================================
+   Right Preview Panel & Canvas Scaling
+   ========================================================================== */
+.preview-panel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+    background-image: radial-gradient(circle at center, #1f2937 0%, #000 100%);
+    overflow: hidden;
+    position: relative;
+}
+
+/* The wrapper handles the responsive scaling so the 1080x1080 box fits the screen */
+.canvas-wrapper {
+    /* We use a specific aspect ratio or simply scale via JS/CSS */
+    /* A quick CSS trick for scaling a fixed 1080px box to fit viewport */
+    width: 1080px;
+    height: 1080px;
+    flex-shrink: 0;
+    transform-origin: center center;
+    /* We will set scale dynamically in JS based on window size, but set a fallback */
+    transform: scale(0.6); 
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   Instagram Post Template (1080x1080) - Dark Mode Premium
+   ========================================================================== */
+.ig-post {
+    width: 1080px;
+    height: 1080px;
+    background-color: var(--ig-bg);
+    display: flex;
+    flex-direction: column;
+    padding: 60px;
+    gap: 40px;
+    color: var(--ig-text-main);
+    overflow: hidden;
+    transform: translateZ(0); 
+    position: relative;
+}
+
+/* --- Plain Solid Content Area --- */
+.content-box {
+    flex: 1;
+    background: var(--ig-content-bg);
+    border: 1px solid var(--ig-border);
+    padding: 80px 80px;
+    border-radius: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    overflow: hidden;
+}
+
+.subtitle-badge {
+    align-self: flex-start;
+    background: var(--ig-badge-bg);
+    color: var(--ig-badge-text);
+    padding: 12px 24px;
+    border-radius: 100px;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.main-title {
+    font-size: 85px;
+    font-weight: 900;
+    line-height: 1.15;
+    margin: 10px 0;
+    color: var(--ig-text-main);
+    letter-spacing: -1px;
+    word-break: break-word;
+}
+
+.body-text {
+    font-size: 42px;
+    line-height: 1.6;
+    color: var(--ig-text-body);
+    font-weight: 400;
+    opacity: 0.9;
+    white-space: pre-line;
+}
+
+/* --- Footer & Logo Placement --- */
+.post-footer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+/* Toggle classes controlled by JS */
+.logo-bottom-left {
+    justify-content: flex-start;
+}
+
+.logo-bottom-right {
+    justify-content: flex-end;
+}
+
+.brand-logo {
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* ==========================================================================
+   Layout Modes & Image Styling
+   ========================================================================== */
+
+/* File Input Styling */
+.file-input {
+    background-color: #111827;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.5rem;
+    color: var(--text-main);
+    width: 100%;
+}
+
+.file-input::-webkit-file-upload-button {
+    background-color: #374151;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    margin-right: 1rem;
+    transition: background 0.2s;
+}
+
+.file-input::-webkit-file-upload-button:hover {
+    background-color: #4B5563;
+}
+
+/* Base image container */
+.post-image {
+    display: block;
+    background-repeat: no-repeat;
+}
+
+/* Slider Controls */
+.slider-group {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: #1F2937;
+    border: 1px solid #374151;
+    border-radius: 8px;
+}
+.slider-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.slider-item label {
+    font-size: 0.8rem;
+    color: #9CA3AF;
+    min-width: 60px;
+}
+.slider-item input[type="range"] {
+    flex: 1;
+    accent-color: #4F46E5;
+}
+
+/* Layout A: Text Only (Solid Background) */
+.layout-text .post-image {
+    display: none;
+}
+.layout-text .content-box {
+    flex: 1;
+}
+
+/* Layout B: Split Image & Text */
+.layout-split {
+    padding: 0;
+    gap: 0;
+}
+.layout-split .post-image {
+    flex: 1.2; /* Image takes slightly more than half */
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-color: #111827;
+}
+.layout-split .content-box {
+    flex: 1;
+    border: none;
+    border-radius: 0;
+    padding: 50px 80px 140px 80px; /* Extra bottom padding for footer */
+    justify-content: center;
+}
+.layout-split .post-footer {
+    position: absolute;
+    bottom: 50px;
+    left: 80px;
+    right: 80px;
+    padding: 0;
+}
+
+/* Layout C: Full Background Image */
+.layout-bg {
+    padding: 60px;
+}
+.layout-bg .post-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    background-color: #111827;
+    z-index: 1;
+}
+.layout-bg .post-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35); /* Dark overlay to make text readable */
+}
+.layout-bg .content-box {
+    flex: 1;
+    z-index: 2;
+    background: rgba(31, 41, 55, 0.85); /* Semi-transparent */
+    backdrop-filter: blur(12px);
+    border-color: rgba(255,255,255,0.1);
+}
+.layout-bg .post-footer {
+    z-index: 2;
+}
+
+/* Layout D: Gradient Fade */
+.layout-fade {
+    padding: 0;
+    gap: 0;
+}
+.layout-fade .post-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+.layout-fade .post-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* Smooth gradient from transparent to theme background color */
+    background: linear-gradient(to bottom, transparent 0%, var(--ig-bg) 100%);
+}
+.layout-fade .content-box {
+    flex: 1;
+    z-index: 2;
+    background: transparent;
+    border: none;
+    margin-top: 40%;
+    padding: 40px 80px 140px 80px;
+    justify-content: flex-end;
+}
+.layout-fade .post-footer {
+    position: absolute;
+    bottom: 50px;
+    left: 80px;
+    right: 80px;
+    padding: 0;
+    z-index: 2;
+}
+
+/* Layout E: Duotone Blend */
+.layout-duotone {
+    padding: 60px;
+    background-color: var(--ig-badge-bg); /* Use the accent color as base */
+}
+.layout-duotone .post-image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    filter: grayscale(100%);
+    mix-blend-mode: luminosity; 
+    opacity: 0.6; /* html2canvas fallback if blend-mode fails */
+}
+.layout-duotone .content-box {
+    flex: 1;
+    z-index: 2;
+    background: transparent;
+    border: none;
+}
+.layout-duotone .post-footer {
+    z-index: 2;
+}
+
+/* Layout F: Floating Glassmorphism */
+.layout-glass {
+    padding: 0;
+    justify-content: flex-end;
+}
+.layout-glass .post-image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+.layout-glass .content-box {
+    flex: none;
+    z-index: 2;
+    margin: 60px;
+    margin-bottom: 160px; /* Space for footer */
+    background: rgba(31, 41, 55, 0.7);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 40px;
+    padding: 60px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+.layout-glass .post-footer {
+    position: absolute;
+    bottom: 60px;
+    left: 80px;
+    right: 80px;
+    padding: 0;
+    z-index: 2;
+}
