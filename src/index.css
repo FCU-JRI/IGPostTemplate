@@ -18,7 +18,7 @@
    IG Post Theme Variables
    ========================================================================== */
 
-.ig-post.theme-crimson {
+.theme-crimson {
     --ig-bg: #09090b; /* Very dark zinc */
     --ig-content-bg: #18181b; 
     --ig-border: #27272a;
@@ -32,7 +32,7 @@
     --ig-image-bg: #111827;
 }
 
-.ig-post.theme-light {
+.theme-light {
     --ig-bg: #f3f4f6;
     --ig-content-bg: #ffffff;
     --ig-border: #e5e7eb;
