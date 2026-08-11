@@ -30,6 +30,7 @@
     --ig-glass-bg: rgba(31, 41, 55, 0.75);
     --ig-glass-border: rgba(255, 255, 255, 0.15);
     --ig-image-bg: #111827;
+    --ig-text-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 .theme-light {
@@ -44,6 +45,7 @@
     --ig-glass-bg: rgba(255, 255, 255, 0.85);
     --ig-glass-border: rgba(0, 0, 0, 0.1);
     --ig-image-bg: #e5e7eb;
+    --ig-text-shadow: 0 4px 16px rgba(255, 255, 255, 0.8), 0 1px 4px rgba(255, 255, 255, 0.9);
 }
 
 * {
