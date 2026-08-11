@@ -1,0 +1,4 @@
+.layoutRoot { padding: 60px; background-color: var(--ig-duotone-bg); }
+.postImage { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: 1; filter: grayscale(100%); mix-blend-mode: luminosity; opacity: 0.6; }
+.contentBox { flex: 1; z-index: 2; background: transparent; border: none; }
+.postFooter { z-index: 2; }

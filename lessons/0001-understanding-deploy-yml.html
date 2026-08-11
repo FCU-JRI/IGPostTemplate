@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>解密 GitHub Actions：deploy.yml 到底在做什麼？</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <div class="lesson-card">
+    <h1>解密 GitHub Actions：deploy.yml 到底在做什麼？</h1>
+    <p>這份課程會帶您了解我們剛剛為 IG 貼文產生器加入的自動部署腳本 <code>deploy.yml</code> 的背後原理。</p>
+
+    <h2>什麼是 GitHub Actions？</h2>
+    <p>想像 GitHub Actions 是您專屬的「雲端管家」。當您對專案做出特定動作（例如上傳程式碼）時，管家會依照您事先寫好的「工作清單」自動幫您跑指令。這份清單就是我們的 <code>deploy.yml</code>。</p>
+
+    <h2>逐段解析 deploy.yml</h2>
+    <p>讓我們來看看腳本中最重要的幾個部分：</p>
+
+    <h3>1. 觸發條件 (Triggers)</h3>
+<pre><code>on:
+  push:
+    branches: ["master"]
+  workflow_dispatch:</code></pre>
+    <p>這告訴管家什麼時候該上班。<code>push: branches: ["master"]</code> 代表「只要有人把程式碼推送到 master 分支，就立刻開始執行」。<code>workflow_dispatch</code> 則是允許您隨時在 GitHub 網頁上手動點擊按鈕執行。</p>
+
+    <h3>2. 權限設定 (Permissions)</h3>
+<pre><code>permissions:
+  contents: read
+  pages: write
+  id-token: write</code></pre>
+    <p>這是給管家的「通行證」。我們允許它讀取我們的程式碼 (<code>contents: read</code>)，並且允許它有權限把產生的網頁發布到 GitHub Pages 上 (<code>pages: write</code>)。</p>
+
+    <h3>3. 工作內容 (Jobs & Steps)</h3>
+    <p>接下來是具體要管家執行的每一個步驟 (Steps)，就像是廚師看食譜做菜一樣：</p>
+<pre><code>steps:
+  # 1. 把最新的程式碼抓下來
+  - name: Checkout
+    uses: actions/checkout@v4
+    
+  # 2. 準備 Node.js 環境 (就像在您的電腦上安裝 Node)
+  - name: Set up Node
+    uses: actions/setup-node@v4
+    with:
+      node-version: 20
+      
+  # 3. 安裝我們需要的工具套件
+  - name: Install dependencies
+    run: npm ci
+    
+  # 4. 把 React 程式碼打包成瀏覽器看得懂的 HTML/CSS/JS (放到 dist 資料夾)
+  - name: Build
+    run: npm run build
+    
+  # 5 & 6. 把打包好的 dist 資料夾上傳到 GitHub 伺服器並發布
+  - name: Upload artifact
+    uses: actions/upload-pages-artifact@v3
+    with:
+      path: './dist'
+      
+  - name: Deploy to GitHub Pages
+    id: deployment
+    uses: actions/deploy-pages@v4</code></pre>
+
+    <h2>總結</h2>
+    <p>簡單來說，<code>deploy.yml</code> 就是在雲端租一台 Linux 電腦，把您的程式碼抓下來，執行 <code>npm run build</code>，最後把打包出來的 <code>dist</code> 網頁丟給 GitHub Pages。這讓您完全不用在自己電腦上手動打包！</p>
+
+    <div class="quiz-container">
+      <div class="quiz-question">牛刀小試：在 <code>deploy.yml</code> 中，哪個關鍵字決定了「什麼時候要自動觸發這個腳本」？</div>
+      <div class="quiz-options">
+        <label><input type="radio" name="q1" value="wrong1"> permissions</label>
+        <label><input type="radio" name="q1" value="correct"> on</label>
+        <label><input type="radio" name="q1" value="wrong2"> steps</label>
+      </div>
+      <div id="feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <p><em>如果您有任何不清楚的地方，請隨時向您的專屬助理（我）提問！</em></p>
+
+  <script>
+    document.querySelectorAll('input[name="q1"]').forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        const feedback = document.getElementById('feedback');
+        if (e.target.value === 'correct') {
+          feedback.textContent = '答對了！「on」區塊定義了觸發條件（例如 push 到 master）。';
+          feedback.className = 'feedback correct';
+        } else {
+          feedback.textContent = '答錯囉，再看一次上面的「觸發條件」區塊。';
+          feedback.className = 'feedback incorrect';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

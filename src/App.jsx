@@ -27,6 +27,8 @@ function reducer(state, action) {
   }
 }
 
+import styles from './App.module.css';
+
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [isExporting, setIsExporting] = useState(false);
@@ -46,7 +48,7 @@ function App() {
   };
 
   return (
-    <div className="app-container">
+    <div className={styles.appContainer}>
       <ControlPanel 
         state={state} 
         dispatch={dispatch} 

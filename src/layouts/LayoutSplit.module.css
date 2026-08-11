@@ -1,0 +1,4 @@
+.layoutRoot { padding: 0; gap: 0; }
+.postImage { flex: 1.2; width: 100%; background-size: cover; background-position: center; background-color: var(--ig-image-bg); }
+.contentBox { flex: 1; border: none; border-radius: 0; padding: 50px 80px 140px 80px; justify-content: center; }
+.postFooter { position: absolute; bottom: 50px; left: 80px; right: 80px; padding: 0; }
