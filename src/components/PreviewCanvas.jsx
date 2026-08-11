@@ -1,4 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
+import LogoDark from '../assets/JRI_LOGO.png';
+import LogoLight from '../assets/JRI_LOGO_Light.png';
 
 const PreviewCanvas = ({ state, canvasRef, wrapperRef, checkOverflow }) => {
   const [scale, setScale] = useState(1);
@@ -55,9 +57,8 @@ const PreviewCanvas = ({ state, canvasRef, wrapperRef, checkOverflow }) => {
           </div>
 
           <div className={`post-footer ${state.logoPosition}`} id="render-footer">
-            {/* The logo paths are in public/ */}
             <img 
-              src={state.theme === 'theme-light' ? "/JRI_LOGO_Light.png" : "/JRI_LOGO.png"} 
+              src={state.theme === 'theme-light' ? LogoLight : LogoDark} 
               alt="JRI Logo" 
               className="brand-logo" 
             />
