@@ -1,10 +1,26 @@
 import React, { useRef, useEffect, useState } from 'react';
-import LogoDark from '../assets/JRI_LOGO.png';
-import LogoLight from '../assets/JRI_LOGO_Light.png';
+import LayoutText from '../layouts/LayoutText';
+import LayoutSplit from '../layouts/LayoutSplit';
+import LayoutBg from '../layouts/LayoutBg';
+import LayoutFade from '../layouts/LayoutFade';
+import LayoutDuotone from '../layouts/LayoutDuotone';
+import LayoutGlass from '../layouts/LayoutGlass';
+import LayoutCaption from '../layouts/LayoutCaption';
+
+const LAYOUT_COMPONENTS = {
+  'layout-text': LayoutText,
+  'layout-split': LayoutSplit,
+  'layout-bg': LayoutBg,
+  'layout-fade': LayoutFade,
+  'layout-duotone': LayoutDuotone,
+  'layout-glass': LayoutGlass,
+  'layout-caption': LayoutCaption,
+};
 
 const PreviewCanvas = ({ state, canvasRef, wrapperRef, checkOverflow }) => {
   const [scale, setScale] = useState(1);
   const containerRef = useRef(null);
+  const SpecificLayout = LAYOUT_COMPONENTS[state.layout];
 
   // Resize logic
   useEffect(() => {
@@ -32,12 +48,6 @@ const PreviewCanvas = ({ state, canvasRef, wrapperRef, checkOverflow }) => {
     }
   }, [state.title, state.body, state.subtitle, state.layout, state.theme, checkOverflow]);
 
-  const imageStyle = {
-    backgroundImage: state.image ? `url(${state.image})` : 'none',
-    backgroundSize: `${state.zoom}%`,
-    backgroundPosition: `${state.x}% ${state.y}%`
-  };
-
   return (
     <main className="preview-panel" ref={containerRef}>
       <div 
@@ -45,25 +55,7 @@ const PreviewCanvas = ({ state, canvasRef, wrapperRef, checkOverflow }) => {
         ref={wrapperRef}
         style={{ transform: `scale(${scale})` }}
       >
-        <div id="export-canvas" className={`ig-post ${state.theme} ${state.layout} ${state.fontFamily}`} ref={canvasRef}>
-          <div className="post-image" id="render-image" style={imageStyle}></div>
-          
-          <div className="content-box" ref={contentBoxRef}>
-            {state.subtitle.trim() !== '' && (
-              <div className="subtitle-badge" id="render-subtitle">{state.subtitle}</div>
-            )}
-            <h1 className="main-title" id="render-title">{state.title}</h1>
-            <p className="body-text" id="render-body">{state.body}</p>
-          </div>
-
-          <div className={`post-footer ${state.logoPosition}`} id="render-footer">
-            <img 
-              src={state.theme === 'theme-light' ? LogoLight : LogoDark} 
-              alt="JRI Logo" 
-              className="brand-logo" 
-            />
-          </div>
-        </div>
+        {SpecificLayout && <SpecificLayout state={state} canvasRef={canvasRef} contentBoxRef={contentBoxRef} />}
       </div>
     </main>
   );
