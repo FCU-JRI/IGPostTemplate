@@ -7,10 +7,41 @@ const ControlPanel = ({ state, dispatch, handleExport, isExporting }) => {
   };
 
   const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const url = URL.createObjectURL(file);
-    dispatch({ type: 'UPDATE_FIELD', field: 'image', value: url });
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+    const newImages = files.map(file => ({
+      url: URL.createObjectURL(file),
+      zoom: 100,
+      x: 50,
+      y: 50
+    }));
+    dispatch({ type: 'UPDATE_FIELD', field: 'images', value: [...(state.images || []), ...newImages] });
+    // Switch selection to the first newly uploaded image
+    dispatch({ type: 'UPDATE_FIELD', field: 'selectedImageIndex', value: (state.images || []).length });
+    // Reset file input so the same files can be selected again if needed
+    e.target.value = '';
+  };
+
+  const handleRemoveImage = (e, indexToRemove) => {
+    e.stopPropagation(); // Prevent selecting the image when clicking the remove button
+    const newImages = (state.images || []).filter((_, index) => index !== indexToRemove);
+    dispatch({ type: 'UPDATE_FIELD', field: 'images', value: newImages });
+    
+    // Adjust selected index if necessary
+    if (state.selectedImageIndex >= newImages.length) {
+      dispatch({ type: 'UPDATE_FIELD', field: 'selectedImageIndex', value: Math.max(0, newImages.length - 1) });
+    } else if (state.selectedImageIndex === indexToRemove) {
+      dispatch({ type: 'UPDATE_FIELD', field: 'selectedImageIndex', value: Math.max(0, indexToRemove - 1) });
+    }
+  };
+
+  const handleImagePropChange = (prop, value) => {
+    dispatch({ 
+      type: 'UPDATE_IMAGE_PROP', 
+      index: state.selectedImageIndex, 
+      prop, 
+      value: parseInt(value, 10) 
+    });
   };
 
   return (
@@ -58,28 +89,95 @@ const ControlPanel = ({ state, dispatch, handleExport, isExporting }) => {
           <option value="layout-duotone">E: 雙色調</option>
           <option value="layout-glass">F: 懸浮玻璃</option>
           <option value="layout-caption">G: 底部註解 (Caption)</option>
+          <option value="layout-gallery">H: 畫廊展示 (Adaptive Gallery)</option>
         </select>
       </div>
 
       {state.layout !== 'layout-text' && (
         <div className={styles.formGroup} id="image-upload-group">
-          <label htmlFor="input-image">上傳圖片 (Image)</label>
-          <input type="file" id="input-image" accept="image/*" className={styles.fileInput} onChange={handleImageUpload} />
+          <label htmlFor="input-image">上傳圖片 (Images)</label>
+          <input 
+            type="file" 
+            id="input-image" 
+            accept="image/*" 
+            multiple 
+            className={styles.fileInput} 
+            onChange={handleImageUpload} 
+          />
 
-          <div className={styles.sliderGroup}>
-            <div className={styles.sliderItem}>
-              <label htmlFor="input-zoom">縮放比例</label>
-              <input type="range" id="input-zoom" min="100" max="300" value={state.zoom} onChange={(e) => handleChange('zoom', e.target.value)} />
+          {state.images && state.images.length > 0 && (
+            <div className={styles.imagePreviewList} style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: '12px' }}>
+              {state.images.map((imgData, index) => {
+                const isSelected = index === state.selectedImageIndex;
+                return (
+                  <div 
+                    key={index}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => dispatch({ type: 'UPDATE_FIELD', field: 'selectedImageIndex', value: index })}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        dispatch({ type: 'UPDATE_FIELD', field: 'selectedImageIndex', value: index });
+                      }
+                    }}
+                    aria-label={`選取圖片 ${index + 1}`}
+                    aria-pressed={isSelected}
+                    style={{ 
+                      position: 'relative', 
+                      width: '64px', 
+                      height: '64px', 
+                      borderRadius: '6px', 
+                      overflow: 'hidden',
+                      cursor: 'pointer',
+                      border: isSelected ? '3px solid var(--color-panel-accent)' : '1px solid var(--color-panel-border)',
+                      boxShadow: isSelected ? '0 0 0 2px var(--color-panel-accent-transparent)' : 'none',
+                      transition: 'transform 0.15s ease-out, border-color 0.15s ease-out, box-shadow 0.15s ease-out',
+                      transform: isSelected ? 'translateY(-2px)' : 'none',
+                      padding: 0,
+                      background: 'none'
+                    }}
+                  >
+                    <img src={imgData.url} alt={`preview-${index}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <button 
+                      type="button"
+                      onClick={(e) => handleRemoveImage(e, index)}
+                      style={{ position: 'absolute', top: '2px', right: '2px', background: 'rgba(0,0,0,0.7)', color: 'white', border: 'none', borderRadius: '50%', width: '20px', height: '20px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2, padding: 0 }}
+                      title="移除圖片"
+                      aria-label="移除圖片"
+                    >
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                    {isSelected && (
+                      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'var(--color-panel-accent)', color: 'var(--color-panel-text)', fontSize: '10px', textAlign: 'center', padding: '2px 0' }}>
+                        調整中
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
-            <div className={styles.sliderItem}>
-              <label htmlFor="input-x">左右平移</label>
-              <input type="range" id="input-x" min="0" max="100" value={state.x} onChange={(e) => handleChange('x', e.target.value)} />
+          )}
+
+          {state.images && state.images.length > 0 && state.images[state.selectedImageIndex] && (
+            <div className={styles.sliderGroup} style={{ marginTop: '20px', padding: '12px', background: 'var(--ig-bg)', borderRadius: '8px', border: '1px solid var(--ig-border)' }}>
+              <div style={{ fontSize: '0.85rem', color: 'var(--ig-text-muted)', marginBottom: '12px', fontWeight: '500' }}>
+                目前控制: 圖片 {state.selectedImageIndex + 1}
+              </div>
+              <div className={styles.sliderItem}>
+                <label htmlFor="input-zoom">縮放比例 ({state.images[state.selectedImageIndex].zoom}%)</label>
+                <input type="range" id="input-zoom" min="100" max="300" value={state.images[state.selectedImageIndex].zoom} onChange={(e) => handleImagePropChange('zoom', e.target.value)} />
+              </div>
+              <div className={styles.sliderItem}>
+                <label htmlFor="input-x">左右平移 ({state.images[state.selectedImageIndex].x}%)</label>
+                <input type="range" id="input-x" min="0" max="100" value={state.images[state.selectedImageIndex].x} onChange={(e) => handleImagePropChange('x', e.target.value)} />
+              </div>
+              <div className={styles.sliderItem}>
+                <label htmlFor="input-y">上下平移 ({state.images[state.selectedImageIndex].y}%)</label>
+                <input type="range" id="input-y" min="0" max="100" value={state.images[state.selectedImageIndex].y} onChange={(e) => handleImagePropChange('y', e.target.value)} />
+              </div>
             </div>
-            <div className={styles.sliderItem}>
-              <label htmlFor="input-y">上下平移</label>
-              <input type="range" id="input-y" min="0" max="100" value={state.y} onChange={(e) => handleChange('y', e.target.value)} />
-            </div>
-          </div>
+          )}
         </div>
       )}
 
@@ -118,19 +216,19 @@ const ControlPanel = ({ state, dispatch, handleExport, isExporting }) => {
           className={styles.textArea}
         />
         {state.bodyFontShrunk && !state.isOverflowing && (
-          <div id="shrink-notice" style={{ color: '#60a5fa', fontSize: '0.85rem', marginTop: '8px' }}>
+          <div id="shrink-notice" style={{ color: 'var(--color-panel-accent)', fontSize: '0.85rem', marginTop: '8px' }}>
             ℹ️ 字體已自動縮小以顯示全部文字。
           </div>
         )}
         {state.isOverflowing && (
-          <div id="overflow-warning" style={{ color: '#ef4444', fontSize: '0.85rem', marginTop: '8px' }}>
+          <div id="overflow-warning" style={{ color: 'var(--color-panel-danger)', fontSize: '0.85rem', marginTop: '8px' }}>
             ⚠️ 警告：文字過多，建議拆成兩頁輸入。
           </div>
         )}
       </div>
 
-      <div className={styles.formGroup}>
-        <label>Logo 位置 (Logo Position)</label>
+      <fieldset className={styles.formGroup} style={{ border: 'none', padding: 0, margin: 0 }}>
+        <legend style={{ fontSize: '0.875rem', color: 'var(--text-muted)', fontWeight: 500, marginBottom: '0.5rem' }}>Logo 位置 (Logo Position)</legend>
         <div className={styles.radioGroup}>
           <label>
             <input
@@ -151,7 +249,7 @@ const ControlPanel = ({ state, dispatch, handleExport, isExporting }) => {
             /> 右下角
           </label>
         </div>
-      </div>
+      </fieldset>
 
       <button id="btn-download" className={styles.btnPrimary} onClick={handleExport} disabled={isExporting}>
         {isExporting ? '正在產生圖片...' : (

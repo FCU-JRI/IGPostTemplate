@@ -3,7 +3,7 @@ import LayoutWrapper from './LayoutWrapper';
 import styles from './LayoutFade.module.css';
 
 const LayoutFade = ({ state, canvasRef, contentBoxRef }) => {
-  const imageStyle = state.image ? { backgroundImage: `url(${state.image})` } : {};
+  const imgData = state.images?.[0];
 
   return (
     <LayoutWrapper 
@@ -12,8 +12,22 @@ const LayoutFade = ({ state, canvasRef, contentBoxRef }) => {
       contentBoxRef={contentBoxRef} 
       styles={styles} 
       renderImage={() => (
-        <div className={styles.postImage} id="render-image" style={imageStyle}>
-          <div className={styles.postImageOverlay}></div>
+        <div className={styles.postImage} id="render-image">
+          {imgData && (
+            <>
+              <img 
+                src={imgData.url} 
+                style={{
+                  position: 'absolute', inset: 0, width: '100%', height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: `${imgData.x}% ${imgData.y}%`,
+                  transform: `scale(${imgData.zoom / 100})`
+                }}
+                alt="fade-bg"
+              />
+              <div className={styles.postImageOverlay} style={{ position: 'absolute', inset: 0 }} />
+            </>
+          )}
         </div>
       )}
     />

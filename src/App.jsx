@@ -11,14 +11,12 @@ const initialState = {
   title: '重要政策公告',
   subtitle: '最新消息發布',
   body: '請留意最新的法規變動與行政措施。\n若有任何疑問，請洽詢相關負責人員。',
-  image: null,
-  zoom: 100,
-  x: 50,
-  y: 50,
+  images: [], // Array of { url, zoom, x, y }
+  selectedImageIndex: 0,
   logoPosition: 'logo-bottom-right',
   isOverflowing: false,
-  // T3: dynamic body font size (px). Starts at 42, shrinks to min 28.
-  bodyFontSize: 42,
+  // T3: dynamic body font size (px). Starts at 36, shrinks to min 28.
+  bodyFontSize: 36,
   bodyFontShrunk: false,
   titleShrunk: false,
   subtitleHidden: false,
@@ -28,6 +26,16 @@ function reducer(state, action) {
   switch (action.type) {
     case 'UPDATE_FIELD':
       return { ...state, [action.field]: action.value };
+    case 'UPDATE_IMAGE_PROP': {
+      const newImages = [...state.images];
+      if (newImages[action.index]) {
+        newImages[action.index] = {
+          ...newImages[action.index],
+          [action.prop]: action.value
+        };
+      }
+      return { ...state, images: newImages };
+    }
     case 'UPDATE_OVERFLOW':
       if (
         state.isOverflowing === action.payload.isOverflowing &&

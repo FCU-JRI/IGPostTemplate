@@ -8,16 +8,18 @@ export const LayoutWrapper = ({ state, canvasRef, contentBoxRef, styles, renderI
   const { fontStyle, logoPosStyle } = getSharedStyles(state, baseStyles);
   const titleCompact = getTitleClass(state.title, baseStyles);
   
-  const bodyFontSize = state.bodyFontSize || 42;
+  const bodyFontSize = state.bodyFontSize || 36;
+  const hasContent = (state.title || '').trim() !== '' || (state.subtitle || '').trim() !== '' || (state.body || '').trim() !== '';
 
   return (
-    <div id="export-canvas" className={cx(baseStyles.igPost, state.theme, fontStyle, styles.layoutRoot)} ref={canvasRef}>
+    <div id="export-canvas" className={cx(baseStyles.igPost, state.theme, fontStyle, styles.layoutRoot, !hasContent && baseStyles.noContent, !hasContent && styles.noContent)} ref={canvasRef}>
       {renderImage && renderImage()}
       
-      <div className={cx(baseStyles.contentBox, styles.contentBox)} ref={contentBoxRef}>
-        {state.subtitle.trim() !== '' && !state.subtitleHidden && (
-          <div className={baseStyles.subtitleBadge} id="render-subtitle">{state.subtitle}</div>
-        )}
+      {hasContent && (
+        <div className={cx(baseStyles.contentBox, styles.contentBox)} ref={contentBoxRef}>
+          {(state.subtitle || '').trim() !== '' && !state.subtitleHidden && (
+            <div className={baseStyles.subtitleBadge} id="render-subtitle">{state.subtitle}</div>
+          )}
         <h1 
           className={cx(baseStyles.mainTitle, titleCompact)} 
           id="render-title"
@@ -33,6 +35,7 @@ export const LayoutWrapper = ({ state, canvasRef, contentBoxRef, styles, renderI
           {state.body}
         </p>
       </div>
+      )}
 
       <div className={cx(baseStyles.postFooter, logoPosStyle, styles.postFooter)} id="render-footer">
         <img 

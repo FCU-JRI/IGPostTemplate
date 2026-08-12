@@ -6,6 +6,7 @@ import LayoutFade from '../layouts/LayoutFade';
 import LayoutDuotone from '../layouts/LayoutDuotone';
 import LayoutGlass from '../layouts/LayoutGlass';
 import LayoutCaption from '../layouts/LayoutCaption';
+import LayoutGallery from '../layouts/LayoutGallery';
 import styles from './PreviewCanvas.module.css';
 
 const LAYOUT_COMPONENTS = {
@@ -16,6 +17,7 @@ const LAYOUT_COMPONENTS = {
   'layout-duotone': LayoutDuotone,
   'layout-glass': LayoutGlass,
   'layout-caption': LayoutCaption,
+  'layout-gallery': LayoutGallery,
 };
 
 const PreviewCanvas = ({ state, canvasRef, wrapperRef, checkOverflow }) => {

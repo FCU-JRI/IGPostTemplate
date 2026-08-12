@@ -33,14 +33,14 @@
 .textArea,
 .selectInput {
     width: 100%;
-    background-color: #111827;
+    background-color: var(--color-panel-bg, #111827);
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 0.75rem 1rem;
     color: var(--text-main);
     font-family: inherit;
     font-size: 0.95rem;
-    transition: border-color 0.2s;
+    transition: border-color 0.15s ease-out;
     resize: vertical;
 }
 
@@ -54,7 +54,7 @@
 .radioGroup {
     display: flex;
     gap: 1.5rem;
-    background-color: #111827;
+    background-color: var(--color-panel-bg, #111827);
     padding: 0.75rem 1rem;
     border-radius: 8px;
     border: 1px solid var(--border);
@@ -81,7 +81,7 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    transition: background-color 0.2s, transform 0.1s;
+    transition: background-color 0.15s ease-out, transform 0.15s ease-out;
     margin-top: 1rem;
 }
 
@@ -99,7 +99,7 @@
 }
 
 .fileInput {
-    background-color: #111827;
+    background-color: var(--color-panel-bg, #111827);
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 0.5rem;
@@ -108,18 +108,18 @@
 }
 
 .fileInput::-webkit-file-upload-button {
-    background-color: #374151;
+    background-color: var(--color-panel-hover, #374151);
     color: white;
     border: none;
     border-radius: 4px;
     padding: 0.5rem 1rem;
     cursor: pointer;
     margin-right: 1rem;
-    transition: background 0.2s;
+    transition: background-color 0.15s ease-out;
 }
 
 .fileInput::-webkit-file-upload-button:hover {
-    background-color: #4B5563;
+    background-color: var(--border);
 }
 
 .sliderGroup {
@@ -128,8 +128,8 @@
     flex-direction: column;
     gap: 0.75rem;
     padding: 1rem;
-    background: #1F2937;
-    border: 1px solid #374151;
+    background: var(--color-panel-bg, #1F2937);
+    border: 1px solid var(--color-panel-border, #374151);
     border-radius: 8px;
 }
 
@@ -148,5 +148,5 @@
 
 .sliderItem input[type="range"] {
     flex: 1;
-    accent-color: #4F46E5;
+    accent-color: var(--primary);
 }

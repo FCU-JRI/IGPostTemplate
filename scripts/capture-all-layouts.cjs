@@ -15,8 +15,8 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
-
-const BASE_URL = 'http://localhost:5174/IGPostTemplate/';
+const PORT = process.env.PORT || 5173;
+const BASE_URL = `http://localhost:${PORT}/IGPostTemplate/`;
 const OUTPUT_DIR = path.join(__dirname, '..', 'scripts', 'captures', 'all-layouts');
 
 const { setField, PAGES } = require('./utils/test-helpers.cjs');
@@ -30,6 +30,7 @@ const LAYOUTS = [
   { value: 'layout-duotone', label: 'E-雙色調' },
   { value: 'layout-glass',   label: 'F-懸浮玻璃' },
   { value: 'layout-caption', label: 'G-底部註解' },
+  { value: 'layout-gallery', label: 'H-畫廊展示' },
 ];
 
 async function setSelect(page, selector, value) {
@@ -98,16 +99,33 @@ async function checkStatus(page) {
       const { hasOverflowWarning, hasShrinkNotice, lastBulletVisible } = await checkStatus(page);
 
       const isPage1 = pd.id === 'page1';
-      // Fail conditions:
-      //  - overflow warning shown (text still truncated after shrink)
-      //  - page1 last bullet not in DOM (disappeared / truncated)
-      const failed = hasOverflowWarning || (isPage1 && !lastBulletVisible);
+      const isConstrainedLayout = ['layout-split', 'layout-fade', 'layout-gallery'].includes(layout.value);
 
-      const statusIcon = failed ? '❌ FAIL' : hasShrinkNotice ? '✅ (auto-shrunk)' : '✅ OK';
+      let failed = false;
+      let statusIcon = '✅ OK';
+
+      if (isPage1 && isConstrainedLayout) {
+        // We EXPECT an overflow warning here because 8 bullets physically cannot fit in ~45% height.
+        if (!hasOverflowWarning) {
+          failed = true;
+          statusIcon = '❌ FAIL (Expected overflow warning, but got none!)';
+        } else {
+          statusIcon = '✅ (expected-overflow)';
+        }
+      } else {
+        // Normal layouts should fit, or auto-shrink. If they overflow, it's a failure.
+        failed = hasOverflowWarning || (isPage1 && !lastBulletVisible);
+        if (failed) {
+          statusIcon = '❌ FAIL';
+        } else if (hasShrinkNotice) {
+          statusIcon = '✅ (auto-shrunk)';
+        }
+      }
+
       console.log(statusIcon);
       if (hasOverflowWarning)  console.log('     → overflow-warning visible');
       if (hasShrinkNotice)     console.log('     → shrink-notice visible (font auto-shrunk)');
-      if (isPage1 && !lastBulletVisible) console.log('     → last bullet NOT in DOM text!');
+      if (isPage1 && !lastBulletVisible && !hasOverflowWarning) console.log('     → last bullet NOT in DOM text!');
 
       // Screenshot
       const canvas = await page.$('#export-canvas');

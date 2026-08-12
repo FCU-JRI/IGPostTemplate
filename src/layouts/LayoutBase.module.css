@@ -4,7 +4,7 @@
     background-color: var(--ig-bg);
     display: flex;
     flex-direction: column;
-    padding: 60px;
+    padding: 64px;
     gap: 40px;
     color: var(--ig-text-main);
     overflow: hidden;
@@ -25,7 +25,7 @@
     min-height: 0;
     background: var(--ig-content-bg);
     border: 1px solid var(--ig-border);
-    padding: 80px 80px;
+    padding: 64px;
     border-radius: 32px;
     display: flex;
     flex-direction: column;
@@ -55,9 +55,9 @@
 }
 
 .mainTitle {
-    font-size: 85px;
+    font-size: 88px;
     font-weight: 900;
-    line-height: 1.15;
+    line-height: 1.05;
     margin: 10px 0;
     color: var(--ig-text-main);
     letter-spacing: -1px;
@@ -71,11 +71,10 @@
 }
 
 .bodyText {
-    font-size: 42px;
+    font-size: 36px;
     line-height: 1.6;
-    color: var(--ig-text-body);
+    color: var(--ig-text-muted);
     font-weight: 400;
-    opacity: 0.9;
     white-space: pre-line;
     overflow-wrap: anywhere;
     word-break: break-word;
@@ -97,7 +96,7 @@
 }
 
 .brandLogo {
-    height: 105px;
+    height: 96px;
     width: auto;
     object-fit: contain;
 }

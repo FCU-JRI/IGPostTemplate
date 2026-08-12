@@ -5,11 +5,11 @@
 }
 
 .layoutRoot .postImage {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    z-index: 1;
+  flex: 1;
+  width: 100%;
+  background-color: var(--ig-image-bg);
+  position: relative;
+  overflow: hidden;
 }
 
 .layoutRoot .contentBox {
