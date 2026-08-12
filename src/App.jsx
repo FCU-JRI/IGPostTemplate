@@ -26,6 +26,15 @@ function reducer(state, action) {
   switch (action.type) {
     case 'UPDATE_FIELD':
       return { ...state, [action.field]: action.value };
+    case 'UPDATE_OVERFLOW':
+      if (
+        state.isOverflowing === action.payload.isOverflowing &&
+        state.bodyFontSize === action.payload.bodyFontSize &&
+        state.bodyFontShrunk === action.payload.bodyFontShrunk
+      ) {
+        return state;
+      }
+      return { ...state, ...action.payload };
     default:
       return state;
   }
@@ -38,16 +47,11 @@ function App() {
   const wrapperRef = useRef(null);
 
   const checkOverflow = useCallback(({ isOverflowing, bodyFontSize, bodyFontShrunk }) => {
-    if (
-      state.isOverflowing !== isOverflowing ||
-      state.bodyFontSize !== bodyFontSize ||
-      state.bodyFontShrunk !== bodyFontShrunk
-    ) {
-      dispatch({ type: 'UPDATE_FIELD', field: 'isOverflowing', value: isOverflowing });
-      dispatch({ type: 'UPDATE_FIELD', field: 'bodyFontSize', value: bodyFontSize });
-      dispatch({ type: 'UPDATE_FIELD', field: 'bodyFontShrunk', value: bodyFontShrunk });
-    }
-  }, [state.isOverflowing, state.bodyFontSize, state.bodyFontShrunk]);
+    dispatch({ 
+      type: 'UPDATE_OVERFLOW', 
+      payload: { isOverflowing, bodyFontSize, bodyFontShrunk } 
+    });
+  }, []);
 
   const handleExport = () => {
     if (canvasRef.current && wrapperRef.current) {
