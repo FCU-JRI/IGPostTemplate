@@ -1,5 +1,5 @@
 .layoutRoot { padding: 0; gap: 0; }
 .layoutRoot .postImage { position: absolute; top: 0; left: 0; right: 0; height: 70%; background-size: cover; background-position: center; z-index: 1; }
-.postImage::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 0%, var(--ig-bg) 100%); }
-.layoutRoot .contentBox { flex: 1; z-index: 2; background: transparent; border: none; margin-top: 40%; padding: 40px 80px 140px 80px; justify-content: flex-end; }
+.postImage::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, var(--ig-bg-transparent) 0%, var(--ig-bg) 100%); }
+.layoutRoot .contentBox { flex: 1; z-index: 2; background: transparent; border: none; padding: 40px 80px 140px 80px; justify-content: flex-end; }
 .layoutRoot .postFooter { position: absolute; bottom: 50px; left: 80px; right: 80px; padding: 0; z-index: 2; }
