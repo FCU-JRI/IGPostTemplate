@@ -9,15 +9,20 @@ const LayoutSplit = ({ state, canvasRef, contentBoxRef }) => {
   const { fontStyle, logoPosStyle } = getSharedStyles(state, baseStyles);
   const titleCompact = getTitleClass(state.title, baseStyles);
 
-  const imageStyle = {
-    backgroundImage: state.image ? `url(${state.image})` : 'none',
-    backgroundSize: `${state.zoom}%`,
-    backgroundPosition: `${state.x}% ${state.y}%`
-  };
+  // T6: When no image, collapse the image zone to a small strip with a placeholder
+  const imageAreaStyle = state.image
+    ? { backgroundImage: `url(${state.image})`, backgroundSize: `${state.zoom}%`, backgroundPosition: `${state.x}% ${state.y}%` }
+    : { flex: '0 0 140px', backgroundImage: 'none' };
 
   return (
     <div id="export-canvas" className={cx(baseStyles.igPost, state.theme, fontStyle, styles.layoutRoot)} ref={canvasRef}>
-      <div className={cx(baseStyles.postImage, styles.postImage)} id="render-image" style={imageStyle}></div>
+      <div className={cx(baseStyles.postImage, styles.postImage)} id="render-image" style={imageAreaStyle}>
+        {!state.image && (
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'rgba(255,255,255,0.3)', fontSize: '32px', letterSpacing: '1px' }}>
+            📷 上傳圖片以套用此版型
+          </div>
+        )}
+      </div>
       <div className={cx(baseStyles.contentBox, styles.contentBox)} ref={contentBoxRef}>
         {state.subtitle.trim() !== '' && (
           <div className={baseStyles.subtitleBadge} id="render-subtitle">{state.subtitle}</div>

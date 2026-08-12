@@ -15,10 +15,13 @@ const LayoutFade = ({ state, canvasRef, contentBoxRef }) => {
     backgroundPosition: `${state.x}% ${state.y}%`
   };
 
+  // T4: no image → content starts at top; image present → push down into fade zone
+  const contentBoxStyle = state.image ? undefined : { marginTop: '0' };
+
   return (
     <div id="export-canvas" className={cx(baseStyles.igPost, state.theme, fontStyle, styles.layoutRoot)} ref={canvasRef}>
       <div className={cx(baseStyles.postImage, styles.postImage)} id="render-image" style={imageStyle}></div>
-      <div className={cx(baseStyles.contentBox, styles.contentBox)} ref={contentBoxRef}>
+      <div className={cx(baseStyles.contentBox, styles.contentBox)} ref={contentBoxRef} style={contentBoxStyle}>
         {state.subtitle.trim() !== '' && (
           <div className={baseStyles.subtitleBadge} id="render-subtitle">{state.subtitle}</div>
         )}
