@@ -18,7 +18,9 @@ const LayoutFade = ({ state, canvasRef, contentBoxRef }) => {
   return (
     <div id="export-canvas" className={cx(baseStyles.igPost, state.theme, fontStyle, styles.layoutRoot)} ref={canvasRef}>
       {state.image && (
-        <div className={cx(baseStyles.postImage, styles.postImage)} id="render-image" style={imageStyle}></div>
+        <div className={cx(baseStyles.postImage, styles.postImage)} id="render-image" style={imageStyle}>
+          <div className={styles.postImageOverlay}></div>
+        </div>
       )}
       <div className={cx(baseStyles.contentBox, styles.contentBox)} ref={contentBoxRef}>
         {state.subtitle.trim() !== '' && (
