@@ -1,30 +1,32 @@
-import html2canvas from 'html2canvas';
+import { domToPng } from 'modern-screenshot';
 
 export const exportImage = async (canvasElement, setExporting) => {
     try {
         setExporting(true);
 
-        // Temporarily reset transform for html2canvas
+        // Temporarily reset transform
         const wrapper = canvasElement.parentElement;
         const originalTransform = wrapper.style.transform;
         wrapper.style.transform = 'scale(1)';
         
         await new Promise(resolve => setTimeout(resolve, 100)); // wait for layout
 
-        const canvas = await html2canvas(canvasElement, {
+        const dataUrl = await domToPng(canvasElement, {
             scale: 1,
-            backgroundColor: null,
-            logging: false,
+            backgroundColor: 'transparent',
             width: 1080,
             height: 1080,
-            useCORS: true
+            features: {
+                // Ensure better font rendering and CSS support
+                removeControlCharacter: false
+            }
         });
 
         wrapper.style.transform = originalTransform;
 
         const link = document.createElement('a');
         link.download = `JRI_Post_${new Date().getTime()}.png`;
-        link.href = canvas.toDataURL('image/png');
+        link.href = dataUrl;
         link.click();
     } catch (error) {
         console.error('Error generating image:', error);

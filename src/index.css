@@ -21,6 +21,8 @@
 .theme-crimson {
     --ig-bg: #09090b; /* Very dark zinc */
     --ig-content-bg: #18181b; 
+    --ig-caption-bg: rgba(24, 24, 27, 0.92);
+    --ig-text-primary: #ffffff;
     --ig-border: #27272a;
     --ig-text-main: #fafafa;
     --ig-text-body: #a1a1aa;
@@ -37,6 +39,8 @@
 .theme-light {
     --ig-bg: #f3f4f6;
     --ig-content-bg: #ffffff;
+    --ig-caption-bg: rgba(255, 255, 255, 0.92);
+    --ig-text-primary: #18181b;
     --ig-border: #e5e7eb;
     --ig-text-main: #111827;
     --ig-text-body: #4b5563;
