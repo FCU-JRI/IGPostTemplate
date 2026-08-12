@@ -29,9 +29,17 @@
     border-radius: 32px;
     display: flex;
     flex-direction: column;
-    justify-content: safe center;
+    justify-content: flex-start;
     gap: 40px;
     overflow: hidden;
+}
+
+.contentBox > :first-child {
+    margin-top: auto;
+}
+
+.contentBox > :last-child {
+    margin-bottom: auto;
 }
 
 .subtitleBadge {

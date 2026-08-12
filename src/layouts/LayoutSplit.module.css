@@ -1,4 +1,6 @@
 .layoutRoot { padding: 0; gap: 0; }
 .layoutRoot .postImage { flex: 1.2; width: 100%; background-size: cover; background-position: center; background-color: var(--ig-image-bg); }
-.layoutRoot .contentBox { flex: 1; border: none; border-radius: 0; padding: 50px 80px 140px 80px; justify-content: safe center; }
+.layoutRoot .contentBox { flex: 1; border: none; border-radius: 0; padding: 50px 80px 140px 80px; justify-content: flex-start; }
+.layoutRoot .contentBox > :first-child { margin-top: auto; }
+.layoutRoot .contentBox > :last-child { margin-bottom: auto; }
 .layoutRoot .postFooter { position: absolute; bottom: 50px; left: 80px; right: 80px; padding: 0; }
