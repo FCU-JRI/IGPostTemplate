@@ -57,7 +57,7 @@ const PreviewCanvas = ({ state, canvasRef, wrapperRef, checkOverflow }) => {
     const FONT_STEP = 2;
 
     // Reset to default first so we always measure from the top
-    checkOverflow({ isOverflowing: false, bodyFontSize: FONT_START, bodyFontShrunk: false });
+    checkOverflow({ isOverflowing: false, bodyFontSize: FONT_START, bodyFontShrunk: false, titleShrunk: false, subtitleHidden: false });
 
     // Use rAF to let the DOM settle after the reset before measuring
     const rafId = requestAnimationFrame(() => {
@@ -66,19 +66,48 @@ const PreviewCanvas = ({ state, canvasRef, wrapperRef, checkOverflow }) => {
 
       let fontSize = FONT_START;
       let shrunk = false;
+      let titleShrunk = false;
+      let subtitleHidden = false;
 
-      // Apply and measure synchronously — box is already in the DOM
+      // Temporary DOM elements for measurement
       const bodyEl = box.querySelector('#render-body');
-      if (bodyEl) bodyEl.style.fontSize = `${fontSize}px`;
+      const titleEl = box.querySelector('#render-title');
+      const subtitleEl = box.querySelector('#render-subtitle');
 
+      // 1. Shrink body font
+      if (bodyEl) bodyEl.style.fontSize = `${fontSize}px`;
       while (box.scrollHeight > box.clientHeight && fontSize > FONT_MIN) {
         fontSize -= FONT_STEP;
         shrunk = true;
         if (bodyEl) bodyEl.style.fontSize = `${fontSize}px`;
       }
 
+      // 2. If still overflowing, shrink title
+      if (box.scrollHeight > box.clientHeight) {
+        titleShrunk = true;
+        if (titleEl) titleEl.style.fontSize = '3.5rem';
+      }
+
+      // 3. If still overflowing, hide subtitle
+      if (box.scrollHeight > box.clientHeight) {
+        subtitleHidden = true;
+        if (subtitleEl) subtitleEl.style.display = 'none';
+      }
+
       const stillOverflowing = box.scrollHeight > box.clientHeight;
-      checkOverflow({ isOverflowing: stillOverflowing, bodyFontSize: fontSize, bodyFontShrunk: shrunk });
+      
+      // Clean up temporary inline styles so React can take over
+      if (bodyEl) bodyEl.style.fontSize = '';
+      if (titleEl) titleEl.style.fontSize = '';
+      if (subtitleEl) subtitleEl.style.display = '';
+
+      checkOverflow({ 
+        isOverflowing: stillOverflowing, 
+        bodyFontSize: fontSize, 
+        bodyFontShrunk: shrunk,
+        titleShrunk,
+        subtitleHidden
+      });
     });
 
     return () => cancelAnimationFrame(rafId);

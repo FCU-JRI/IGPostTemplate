@@ -6,7 +6,14 @@ export const getSharedStyles = (state, baseStyles) => {
   return { fontStyle, logoPosStyle };
 };
 
-// T2: Returns the compact CSS class when title is long (>9 chars)
+export const MAX_TITLE_LENGTH_BEFORE_COMPACT = 9;
+
+/**
+ * Returns the compact title class if the title exceeds the character limit.
+ * @param {string} title 
+ * @param {object} baseStyles 
+ * @returns {string|undefined}
+ */
 export const getTitleClass = (title, baseStyles) => {
-  return title.length > 9 ? baseStyles.mainTitleCompact : undefined;
+  return title.length > MAX_TITLE_LENGTH_BEFORE_COMPACT ? baseStyles.mainTitleCompact : undefined;
 };
