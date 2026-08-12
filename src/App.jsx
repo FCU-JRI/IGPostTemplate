@@ -16,7 +16,10 @@ const initialState = {
   x: 50,
   y: 50,
   logoPosition: 'logo-bottom-right',
-  isOverflowing: false
+  isOverflowing: false,
+  // T3: dynamic body font size (px). Starts at 42, shrinks to min 28.
+  bodyFontSize: 42,
+  bodyFontShrunk: false,
 };
 
 function reducer(state, action) {
@@ -34,11 +37,17 @@ function App() {
   const canvasRef = useRef(null);
   const wrapperRef = useRef(null);
 
-  const checkOverflow = useCallback((isOverflowing) => {
-    if (state.isOverflowing !== isOverflowing) {
+  const checkOverflow = useCallback(({ isOverflowing, bodyFontSize, bodyFontShrunk }) => {
+    if (
+      state.isOverflowing !== isOverflowing ||
+      state.bodyFontSize !== bodyFontSize ||
+      state.bodyFontShrunk !== bodyFontShrunk
+    ) {
       dispatch({ type: 'UPDATE_FIELD', field: 'isOverflowing', value: isOverflowing });
+      dispatch({ type: 'UPDATE_FIELD', field: 'bodyFontSize', value: bodyFontSize });
+      dispatch({ type: 'UPDATE_FIELD', field: 'bodyFontShrunk', value: bodyFontShrunk });
     }
-  }, [state.isOverflowing]);
+  }, [state.isOverflowing, state.bodyFontSize, state.bodyFontShrunk]);
 
   const handleExport = () => {
     if (canvasRef.current && wrapperRef.current) {

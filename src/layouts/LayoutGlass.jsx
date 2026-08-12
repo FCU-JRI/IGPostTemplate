@@ -2,11 +2,12 @@ import React from 'react';
 import LogoDark from '../assets/JRI_LOGO.png';
 import LogoLight from '../assets/JRI_LOGO_Light.png';
 import baseStyles from './LayoutBase.module.css';
-import { cx, getSharedStyles } from '../utils/styleUtils';
+import { cx, getSharedStyles, getTitleClass } from '../utils/styleUtils';
 import styles from './LayoutGlass.module.css';
 
 const LayoutGlass = ({ state, canvasRef, contentBoxRef }) => {
   const { fontStyle, logoPosStyle } = getSharedStyles(state, baseStyles);
+  const titleCompact = getTitleClass(state.title, baseStyles);
 
   const imageStyle = {
     backgroundImage: state.image ? `url(${state.image})` : 'none',
@@ -21,7 +22,7 @@ const LayoutGlass = ({ state, canvasRef, contentBoxRef }) => {
         {state.subtitle.trim() !== '' && (
           <div className={baseStyles.subtitleBadge} id="render-subtitle">{state.subtitle}</div>
         )}
-        <h1 className={baseStyles.mainTitle} id="render-title">{state.title}</h1>
+        <h1 className={cx(baseStyles.mainTitle, titleCompact)} id="render-title">{state.title}</h1>
         <p className={baseStyles.bodyText} id="render-body">{state.body}</p>
       </div>
 

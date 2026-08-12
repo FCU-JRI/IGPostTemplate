@@ -117,9 +117,14 @@ const ControlPanel = ({ state, dispatch, handleExport, isExporting }) => {
           onChange={(e) => handleChange('body', e.target.value)}
           className={styles.textArea}
         />
+        {state.bodyFontShrunk && !state.isOverflowing && (
+          <div id="shrink-notice" style={{ color: '#60a5fa', fontSize: '0.85rem', marginTop: '8px' }}>
+            ℹ️ 字體已自動縮小以顯示全部文字。
+          </div>
+        )}
         {state.isOverflowing && (
           <div id="overflow-warning" style={{ color: '#ef4444', fontSize: '0.85rem', marginTop: '8px' }}>
-            ⚠️ 警告：文字過多，產出的圖片將會被裁切。
+            ⚠️ 警告：文字過多，建議拆成兩頁輸入。
           </div>
         )}
       </div>

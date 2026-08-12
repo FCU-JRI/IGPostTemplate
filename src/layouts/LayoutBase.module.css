@@ -53,6 +53,12 @@
     color: var(--ig-text-main);
     letter-spacing: -1px;
     word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+/* T2: compact title for long headings (>9 chars) */
+.mainTitleCompact {
+    font-size: 64px;
 }
 
 .bodyText {
@@ -62,6 +68,8 @@
     font-weight: 400;
     opacity: 0.9;
     white-space: pre-line;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .postFooter {

@@ -47,12 +47,41 @@ const PreviewCanvas = ({ state, canvasRef, wrapperRef, checkOverflow }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, [wrapperRef]);
 
-  // Check overflow when text or layout changes
+  // T3: Shrink bodyText font-size until content fits or we hit min (28px).
+  // Reports { isOverflowing, bodyFontSize, bodyFontShrunk } back to App.
   useEffect(() => {
-    if (contentBoxRef.current) {
-      const isOverflowing = contentBoxRef.current.scrollHeight > contentBoxRef.current.clientHeight;
-      checkOverflow(isOverflowing);
-    }
+    if (!contentBoxRef.current) return;
+
+    const FONT_START = 42;
+    const FONT_MIN = 28;
+    const FONT_STEP = 2;
+
+    // Reset to default first so we always measure from the top
+    checkOverflow({ isOverflowing: false, bodyFontSize: FONT_START, bodyFontShrunk: false });
+
+    // Use rAF to let the DOM settle after the reset before measuring
+    const rafId = requestAnimationFrame(() => {
+      const box = contentBoxRef.current;
+      if (!box) return;
+
+      let fontSize = FONT_START;
+      let shrunk = false;
+
+      // Apply and measure synchronously — box is already in the DOM
+      const bodyEl = box.querySelector('#render-body');
+      if (bodyEl) bodyEl.style.fontSize = `${fontSize}px`;
+
+      while (box.scrollHeight > box.clientHeight && fontSize > FONT_MIN) {
+        fontSize -= FONT_STEP;
+        shrunk = true;
+        if (bodyEl) bodyEl.style.fontSize = `${fontSize}px`;
+      }
+
+      const stillOverflowing = box.scrollHeight > box.clientHeight;
+      checkOverflow({ isOverflowing: stillOverflowing, bodyFontSize: fontSize, bodyFontShrunk: shrunk });
+    });
+
+    return () => cancelAnimationFrame(rafId);
   }, [state.title, state.body, state.subtitle, state.layout, state.theme, checkOverflow]);
 
   const SpecificLayout = LAYOUT_COMPONENTS[state.layout] || LayoutText;
