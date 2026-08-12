@@ -22,13 +22,14 @@
 
 .contentBox {
     flex: 1;
+    min-height: 0;
     background: var(--ig-content-bg);
     border: 1px solid var(--ig-border);
     padding: 80px 80px;
     border-radius: 32px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: safe center;
     gap: 40px;
     overflow: hidden;
 }
