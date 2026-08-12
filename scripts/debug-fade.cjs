@@ -9,7 +9,7 @@ const fs = require('fs');
   });
 
   const page = await browser.newPage();
-  await page.setViewport({ width: 1920, height: 1080 });
+  await page.setViewport({ width: 1920, height: 1350 });
 
   await page.goto('http://localhost:5174/IGPostTemplate/', { waitUntil: 'networkidle0' });
   await new Promise(r => setTimeout(r, 1000));
@@ -52,7 +52,7 @@ const fs = require('fs');
     el.parentElement.style.transform = 'scale(1)';
     await new Promise(r => setTimeout(r, 100));
 
-    const svg = await domToSvg(el, { width: 1080, height: 1080, scale: 1 });
+    const svg = await domToSvg(el, { width: 1080, height: 1350, scale: 1 });
     el.parentElement.style.transform = origTransform;
     return { svgSnippet: svg.substring(0, 500), svgLength: svg.length, fullSvg: svg };
   });

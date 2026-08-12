@@ -8,7 +8,7 @@ const fs = require('fs');
   });
 
   const page = await browser.newPage();
-  await page.setViewport({ width: 1920, height: 1080 });
+  await page.setViewport({ width: 1920, height: 1350 });
 
   await page.goto('http://localhost:5174/IGPostTemplate/', { waitUntil: 'networkidle0' });
   await new Promise(r => setTimeout(r, 1000));
@@ -32,9 +32,9 @@ const fs = require('fs');
     await new Promise(r => setTimeout(r, 100));
 
     // Test with backgroundColor: null vs backgroundColor: '#09090b'
-    const pngDefault = await domToPng(el, { scale: 1, width: 1080, height: 1080 });
-    const pngTransparent = await domToPng(el, { scale: 1, backgroundColor: 'transparent', width: 1080, height: 1080 });
-    const svgString = await domToSvg(el, { scale: 1, width: 1080, height: 1080 });
+    const pngDefault = await domToPng(el, { scale: 1, width: 1080, height: 1350 });
+    const pngTransparent = await domToPng(el, { scale: 1, backgroundColor: 'transparent', width: 1080, height: 1350 });
+    const svgString = await domToSvg(el, { scale: 1, width: 1080, height: 1350 });
 
     el.parentElement.style.transform = origTransform;
 

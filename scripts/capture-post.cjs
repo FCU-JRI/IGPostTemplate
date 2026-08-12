@@ -24,7 +24,7 @@ const { setField, PAGES } = require('./utils/test-helpers.cjs');
   });
 
   const page = await browser.newPage();
-  await page.setViewport({ width: 1920, height: 1080 });
+  await page.setViewport({ width: 1920, height: 1350 });
 
   console.log(`Opening ${BASE_URL} …`);
   await page.goto(BASE_URL, { waitUntil: 'networkidle0', timeout: 30000 });

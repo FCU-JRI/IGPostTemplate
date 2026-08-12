@@ -37,7 +37,7 @@ const PreviewCanvas = ({ state, canvasRef, wrapperRef, checkOverflow }) => {
       
       const scale = Math.min(
         availableWidth / 1080,
-        availableHeight / 1080,
+        availableHeight / 1350,
         1
       );
       

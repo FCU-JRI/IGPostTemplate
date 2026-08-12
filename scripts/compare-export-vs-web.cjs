@@ -74,7 +74,7 @@ async function setField(page, selector, value) {
   });
 
   const page = await browser.newPage();
-  await page.setViewport({ width: 1920, height: 1080 });
+  await page.setViewport({ width: 1920, height: 1350 });
 
   page.on('console', msg => console.log('  [BROWSER CONSOLE]', msg.type(), msg.text()));
   page.on('pageerror', err => console.log('  [BROWSER ERROR]', err.message));

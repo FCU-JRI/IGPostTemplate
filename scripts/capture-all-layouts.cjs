@@ -71,7 +71,7 @@ async function checkStatus(page) {
   });
 
   const page = await browser.newPage();
-  await page.setViewport({ width: 1920, height: 1080 });
+  await page.setViewport({ width: 1920, height: 1350 });
 
   console.log(`Opening ${BASE_URL} …`);
   await page.goto(BASE_URL, { waitUntil: 'networkidle0', timeout: 30000 });
@@ -104,14 +104,9 @@ async function checkStatus(page) {
       let failed = false;
       let statusIcon = '✅ OK';
 
-      if (isPage1 && isConstrainedLayout) {
-        // We EXPECT an overflow warning here because 8 bullets physically cannot fit in ~45% height.
-        if (!hasOverflowWarning) {
-          failed = true;
-          statusIcon = '❌ FAIL (Expected overflow warning, but got none!)';
-        } else {
-          statusIcon = '✅ (expected-overflow)';
-        }
+      if (isPage1 && isConstrainedLayout && hasOverflowWarning) {
+        // Taller layouts might not overflow anymore, but if they do, it's expected.
+        statusIcon = '✅ (expected-overflow)';
       } else {
         // Normal layouts should fit, or auto-shrink. If they overflow, it's a failure.
         failed = hasOverflowWarning || (isPage1 && !lastBulletVisible);

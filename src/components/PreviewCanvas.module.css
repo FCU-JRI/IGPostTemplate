@@ -11,7 +11,7 @@
 
 .canvasWrapper {
     width: 1080px;
-    height: 1080px;
+    height: 1350px;
     flex-shrink: 0;
     transform-origin: center center;
     transform: scale(0.6); 
