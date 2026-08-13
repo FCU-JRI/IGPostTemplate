@@ -11,9 +11,12 @@ export const exportImage = async (canvasElement, setExporting) => {
         
         await new Promise(resolve => setTimeout(resolve, 100)); // wait for layout
 
+        const computedStyle = window.getComputedStyle(canvasElement);
+        const bgColor = computedStyle.backgroundColor || '#09090b';
+
         const dataUrl = await domToPng(canvasElement, {
             scale: 1,
-            backgroundColor: 'transparent',
+            backgroundColor: bgColor,
             width: 1080,
             height: 1350,
             features: {
