@@ -4,12 +4,14 @@
     background-color: var(--ig-bg);
     display: flex;
     flex-direction: column;
-    padding: 64px;
-    gap: 40px;
+    padding: 80px 64px 100px 64px;
+    gap: var(--spacing-loose);
     color: var(--ig-text-main);
     overflow: hidden;
     transform: translateZ(0); 
     position: relative;
+    isolation: isolate;
+    z-index: 0;
 }
 
 .fontSans {
@@ -30,7 +32,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 40px;
+    gap: var(--spacing-base);
     overflow: hidden;
 }
 
@@ -78,6 +80,10 @@
     white-space: pre-line;
     overflow-wrap: anywhere;
     word-break: break-word;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+    overflow: hidden;
 }
 
 .postFooter {

@@ -23,7 +23,7 @@ export const LayoutWrapper = ({ state, canvasRef, contentBoxRef, styles, renderI
         <h1 
           className={cx(baseStyles.mainTitle, titleCompact)} 
           id="render-title"
-          style={{ fontSize: state.titleShrunk ? '3.5rem' : undefined }}
+          style={{ fontSize: state.titleShrunk ? '56px' : undefined }}
         >
           {state.title}
         </h1>

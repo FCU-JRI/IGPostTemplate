@@ -36,11 +36,12 @@ const ControlPanel = ({ state, dispatch, handleExport, isExporting }) => {
   };
 
   const handleImagePropChange = (prop, value) => {
+    const finalValue = prop === 'objectFit' ? value : parseInt(value, 10);
     dispatch({ 
       type: 'UPDATE_IMAGE_PROP', 
       index: state.selectedImageIndex, 
       prop, 
-      value: parseInt(value, 10) 
+      value: finalValue 
     });
   };
 
@@ -175,6 +176,19 @@ const ControlPanel = ({ state, dispatch, handleExport, isExporting }) => {
               <div className={styles.sliderItem}>
                 <label htmlFor="input-y">上下平移 ({state.images[state.selectedImageIndex].y}%)</label>
                 <input type="range" id="input-y" min="0" max="100" value={state.images[state.selectedImageIndex].y} onChange={(e) => handleImagePropChange('y', e.target.value)} />
+              </div>
+              <div className={styles.sliderItem}>
+                <label htmlFor="input-fit">圖片填滿 (Object Fit)</label>
+                <select
+                  id="input-fit"
+                  className={styles.selectInput}
+                  value={state.images[state.selectedImageIndex].objectFit || 'cover'}
+                  onChange={(e) => handleImagePropChange('objectFit', e.target.value)}
+                  style={{ width: '100%', marginTop: '4px' }}
+                >
+                  <option value="cover">裁切填滿 (Cover - 適合照片)</option>
+                  <option value="contain">完整顯示 (Contain - 適合圖表)</option>
+                </select>
               </div>
             </div>
           )}

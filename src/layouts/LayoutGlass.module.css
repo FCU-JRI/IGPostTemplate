@@ -1,4 +1,4 @@
 .layoutRoot { padding: 0; justify-content: flex-end; }
 .layoutRoot .postImage { position: absolute; inset: 0; background-color: var(--ig-image-bg); z-index: 1; overflow: hidden; }
-.layoutRoot .contentBox { flex: 1; z-index: 2; margin: 60px; margin-bottom: 180px; background: var(--ig-glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--ig-glass-border); border-radius: 40px; padding: 60px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); overflow: hidden; }
+.layoutRoot .contentBox { flex: 1; z-index: 2; margin: 60px; margin-bottom: 180px; background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--ig-glass-border); border-radius: 40px; padding: 60px; box-shadow: 0 32px 64px -16px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.2); overflow: hidden; }
 .layoutRoot .postFooter { position: absolute; bottom: 60px; left: 80px; right: 80px; padding: 0; z-index: 2; }

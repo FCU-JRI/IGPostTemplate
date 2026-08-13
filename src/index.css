@@ -12,6 +12,11 @@
     --border: #374151;
     --text-main: #F9FAFB;
     --text-muted: #9CA3AF;
+    
+    /* Semantic Spacing Tokens */
+    --spacing-tight: 16px;
+    --spacing-base: 32px;
+    --spacing-loose: 48px;
 }
 
 /* ==========================================================================

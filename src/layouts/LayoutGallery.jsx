@@ -40,8 +40,9 @@ const LayoutGallery = ({ state, canvasRef, contentBoxRef }) => {
               src={imgData.url} 
               style={{
                 position: 'absolute', inset: 0, width: '100%', height: '100%',
-                objectFit: 'cover',
+                objectFit: imgData.objectFit || 'cover',
                 objectPosition: `${imgData.x}% ${imgData.y}%`,
+                transformOrigin: `${imgData.x}% ${imgData.y}%`,
                 transform: `scale(${imgData.zoom / 100})`
               }}
               alt={`Gallery item ${index + 1}`}

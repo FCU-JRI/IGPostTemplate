@@ -7,7 +7,13 @@ const LayoutFade = ({ state, canvasRef, contentBoxRef }) => {
   const isLight = state.theme === 'theme-light';
   const bgStart = isLight ? 'rgba(243, 244, 246, 0)' : 'rgba(9, 9, 11, 0)';
   const bgEnd = isLight ? '#f3f4f6' : '#09090b';
-  const fadeGradient = `linear-gradient(to bottom, ${bgStart} 0%, ${bgEnd} 100%)`;
+  const fadeGradient = `linear-gradient(to bottom, 
+    ${bgStart} 0%, 
+    color-mix(in srgb, ${bgEnd} 10%, transparent) 25%,
+    color-mix(in srgb, ${bgEnd} 40%, transparent) 50%,
+    color-mix(in srgb, ${bgEnd} 75%, transparent) 75%,
+    ${bgEnd} 100%
+  )`;
 
   return (
     <LayoutWrapper 
@@ -25,6 +31,7 @@ const LayoutFade = ({ state, canvasRef, contentBoxRef }) => {
                   position: 'absolute', inset: 0, width: '100%', height: '100%',
                   objectFit: 'cover',
                   objectPosition: `${imgData.x}% ${imgData.y}%`,
+                  transformOrigin: `${imgData.x}% ${imgData.y}%`,
                   transform: `scale(${imgData.zoom / 100})`
                 }}
                 alt="fade-bg"
