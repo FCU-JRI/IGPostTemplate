@@ -15,7 +15,7 @@ export const exportImage = async (canvasElement, setExporting) => {
             scale: 1,
             backgroundColor: 'transparent',
             width: 1080,
-            height: 1080,
+            height: 1350,
             features: {
                 // Ensure better font rendering and CSS support
                 removeControlCharacter: false
