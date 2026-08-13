@@ -11,7 +11,7 @@ const fs = require('fs');
   const page = await browser.newPage();
   await page.setViewport({ width: 1920, height: 1350 });
 
-  await page.goto('http://localhost:5174/IGPostTemplate/', { waitUntil: 'networkidle0' });
+  await page.goto('http://localhost:5173/IGPostTemplate/', { waitUntil: 'networkidle0' });
   await new Promise(r => setTimeout(r, 1000));
 
   // Select Layout D

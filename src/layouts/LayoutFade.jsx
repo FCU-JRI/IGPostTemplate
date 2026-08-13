@@ -4,6 +4,10 @@ import styles from './LayoutFade.module.css';
 
 const LayoutFade = ({ state, canvasRef, contentBoxRef }) => {
   const imgData = state.images?.[0];
+  const isLight = state.theme === 'theme-light';
+  const bgStart = isLight ? 'rgba(243, 244, 246, 0)' : 'rgba(9, 9, 11, 0)';
+  const bgEnd = isLight ? '#f3f4f6' : '#09090b';
+  const fadeGradient = `linear-gradient(to bottom, ${bgStart} 0%, ${bgEnd} 100%)`;
 
   return (
     <LayoutWrapper 
@@ -25,7 +29,7 @@ const LayoutFade = ({ state, canvasRef, contentBoxRef }) => {
                 }}
                 alt="fade-bg"
               />
-              <div className={styles.postImageOverlay} style={{ position: 'absolute', inset: 0 }} />
+              <div className={styles.postImageOverlay} style={{ position: 'absolute', inset: 0, background: fadeGradient }} />
             </>
           )}
         </div>
