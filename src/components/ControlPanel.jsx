@@ -217,7 +217,17 @@ const ControlPanel = ({ state, dispatch, handleExport, isExporting }) => {
         />
         {state.bodyFontShrunk && !state.isOverflowing && (
           <div id="shrink-notice" style={{ color: 'var(--color-panel-accent)', fontSize: '0.85rem', marginTop: '8px' }}>
-            ℹ️ 字體已自動縮小以顯示全部文字。
+            ℹ️ 字體已自動縮小以適應版面。
+          </div>
+        )}
+        {state.titleShrunk && !state.isOverflowing && (
+          <div id="title-shrink-notice" style={{ color: 'var(--color-panel-accent)', fontSize: '0.85rem', marginTop: '4px' }}>
+            ℹ️ 標題字體已縮小。
+          </div>
+        )}
+        {state.subtitleHidden && !state.isOverflowing && (
+          <div id="subtitle-hidden-notice" style={{ color: 'var(--color-panel-danger)', fontSize: '0.85rem', marginTop: '4px' }}>
+            ⚠️ 空間不足，副標題已被自動隱藏。
           </div>
         )}
         {state.isOverflowing && (
